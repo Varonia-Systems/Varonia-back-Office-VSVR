@@ -1,0 +1,25 @@
+{
+    "name": "VboVSVR.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "VboBase.Runtime",
+        "NaughtyAttributes.Core",
+        "NaughtyAttributes.Editor",
+        "NaughtyAttributes.Test",
+        "SteamVR",
+        "SteamVR_Editor",
+        "SteamVR_Input_Editor",
+        "SteamVR_Windows_EditorHelper",
+        "SteamVR_Actions",
+        "Unity.XR.OpenVR"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

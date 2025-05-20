@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
 using VaroniaBackOffice;
+using static DebugVSVR;
 
 public class SteamVSVRVaronia : MonoBehaviour
 {
@@ -149,7 +150,8 @@ public class SteamVSVRVaronia : MonoBehaviour
                       if (A.Contains("Vive Tracker") && D)
                     {
 #if VBO_Input
-                        Info += "GUN TRACKER : " + D + "Tracking : " + VaroniaGlobal.VG.HasWeaponTracking + "\n";
+                       
+                        Info += "GUN TRACKER : " + D+ " Tracking : " + VaroniaGlobal.VG.HasWeaponTracking + "\n";
 #endif
                     }
                     else
@@ -207,6 +209,35 @@ public class SteamVSVRVaronia : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (!timeoutEventFired && (DateTime.UtcNow - lastMessageTime).TotalSeconds > 0.1 && Time.time >5)
+        {
+            timeoutEventFired = true;
+
+            OnWebsocketTimeout();
+        }
+
+
+    }
+
+
+
+    static void OnWebsocketTimeout()
+    {
+
+        Debug.Log(@" /!\ Lost Streaming connection /!\ ");
+
+        StatisticsSummaryItem temp = new StatisticsSummaryItem();
+
+       temp.total_latency_ms = -1;
+        temp.network_latency_ms = -1;
+        temp.encode_latency_ms = -1;
+        temp.decode_latency_ms = -1;
+
+        LiveStatistics = temp;
+        // AvgStatistics.Add(LiveStatistics);
+    }
 
 
     void LiveStats()
@@ -217,7 +248,7 @@ public class SteamVSVRVaronia : MonoBehaviour
         string Log_Total_Latency = ReturnTextColor(DebugVSVR.LiveStatistics.total_latency_ms, 85, 95);
 
 
-        if (DebugVSVR.LiveStatistics.network_latency_ms > 60)
+        if (DebugVSVR.LiveStatistics.network_latency_ms > 60 || DebugVSVR.LiveStatistics.network_latency_ms == -1)
             BigLagCount++;
 
         DebugVaronia.Instance.Latency.text = $"T.Lat : {Log_Total_Latency} ms \nNet.Lat : {Log_Network_Latency} ms  \nEnc.Lat :  {Log_Encode_Latency} ms  \nDec.Lat : {Log_Decode_Latency} ms";
@@ -258,6 +289,9 @@ public class SteamVSVRVaronia : MonoBehaviour
 
         switch (value)
         {
+            case double a when a < 0:
+                returnvalue = "<color=grey>" + value.ToString("N1") + "</color>";
+                break;
             case double a when a <= good:
                 returnvalue = "<color=green>" + value.ToString("N1") + "</color>";
                 break;

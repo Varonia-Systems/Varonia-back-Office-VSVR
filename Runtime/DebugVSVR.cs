@@ -41,6 +41,9 @@ public class DebugVSVR
     public static List<StatisticsSummaryItem> AvgStatistics;
 
 
+    public static DateTime lastMessageTime = DateTime.UtcNow;
+    public static bool timeoutEventFired = false;
+
     public static void Init()
     {
         NeedStop = false;
@@ -68,6 +71,9 @@ public class DebugVSVR
                         WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
                         if (result.MessageType == WebSocketMessageType.Text)
                         {
+                            lastMessageTime = DateTime.UtcNow;
+                            timeoutEventFired = false; 
+
                             bufferString += Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
                             var tSplitted = SplitBuffer(bufferString);
                             if (tSplitted.Count > 1)
@@ -83,8 +89,15 @@ public class DebugVSVR
                                 }
                                 else if (tData["event_type"]["id"].ToString() == "StatisticsSummary")
                                 {
+                                 
+
                                     LiveStatistics = JsonConvert.DeserializeObject<StatisticsSummaryItem>(tData["event_type"]["data"].ToString());
                                     AvgStatistics.Add(LiveStatistics);
+
+                                    if (LiveStatistics.network_latency_ms >13)
+                                        Debug.Log(@" /!\ Network Latency Alert '"+ LiveStatistics.network_latency_ms + @"' /!\ ");
+
+
                                 }
 
                                 bufferString = tSplitted[1];
@@ -94,12 +107,14 @@ public class DebugVSVR
                     catch (Exception ex)
                     {
                     }
+
+                 
+
                 }
                 IsRunning = false;
             }
         });
     }
-
 
 
 

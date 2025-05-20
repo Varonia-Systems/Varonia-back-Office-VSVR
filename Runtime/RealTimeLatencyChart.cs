@@ -31,7 +31,7 @@ public class RealTimeLatencyChart : MonoBehaviour
         Canvas canvas = canvasGO.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvasGO.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-       // canvasGO.AddComponent<GraphicRaycaster>();
+        // canvasGO.AddComponent<GraphicRaycaster>();
         canvas.sortingOrder = 1;
         // Panel
         GameObject panelGO = new GameObject("GraphPanel", typeof(RectTransform), typeof(Image));
@@ -53,7 +53,7 @@ public class RealTimeLatencyChart : MonoBehaviour
             barGO.transform.SetParent(graphPanel, false);
 
             RectTransform rt = barGO.GetComponent<RectTransform>();
-            rt.anchorMin = new Vector2(0f, 0f);   
+            rt.anchorMin = new Vector2(0f, 0f);
             rt.anchorMax = new Vector2(0f, 0f);
             rt.pivot = new Vector2(0f, 0f);
             rt.sizeDelta = new Vector2(barWidth - 1f, 3f);
@@ -72,7 +72,12 @@ public class RealTimeLatencyChart : MonoBehaviour
     /// </summary>
     public void AddLatencyValue(float latency)
     {
-        float height = Mathf.Clamp01(latency / maxLatency) * chartSize.y;
+        float height = 0;
+
+        if (latency < 0f)
+            height = 10;
+        else
+            height = Mathf.Clamp01(latency / maxLatency) * chartSize.y;
 
         // Recycler la première barre
         RectTransform oldBar = bars[0];
@@ -99,7 +104,7 @@ public class RealTimeLatencyChart : MonoBehaviour
 
     Color GetColorForLatency(float latency)
     {
-        if (latency >= 999f)
+        if (latency == -1)
             return Color.gray;
         else if (latency >= redThreshold)
             return Color.red;

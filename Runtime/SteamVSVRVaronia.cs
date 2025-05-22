@@ -26,7 +26,6 @@ public class SteamVSVRVaronia : MonoBehaviour
     [BoxGroup("Debug")] public Text liveStats, avgStats;
 
 
-    private Transform WeaponTracker;
     private float lastXpos = 0;
 
     private string Info;
@@ -151,7 +150,7 @@ public class SteamVSVRVaronia : MonoBehaviour
                     {
 #if VBO_Input
                        
-                        Info += "GUN TRACKER : " + D+ " Tracking : " + VaroniaGlobal.VG.HasWeaponTracking + "\n";
+                        Info += "GUN TRACKER : " + D+ " Tracking : " + VaroniaInput.Instance.HasWeaponTracking + "\n";
 #endif
                     }
                     else
@@ -180,13 +179,16 @@ public class SteamVSVRVaronia : MonoBehaviour
 
             try
             {
-            if (lastXpos != WeaponTracker.localPosition.x && !VaroniaGlobal.VG.HasWeaponTracking)
-                VaroniaGlobal.VG.OnWeaponHasTracking.Invoke();
-            else if (lastXpos == WeaponTracker.localPosition.x && VaroniaGlobal.VG.HasWeaponTracking)
-                VaroniaGlobal.VG.OnWeaponLostTracking.Invoke();
+
+            
+
+                if (lastXpos != VaroniaInput.Instance.Tracking.localPosition.x && !VaroniaInput.Instance.HasWeaponTracking)
+                    VaroniaInput.Instance.OnWeaponHasTracking.Invoke();
+            else if (lastXpos == VaroniaInput.Instance.Tracking.localPosition.x && VaroniaInput.Instance.HasWeaponTracking)
+                    VaroniaInput.Instance.OnWeaponLostTracking.Invoke();
 
 
-            lastXpos = WeaponTracker.localPosition.x;
+            lastXpos = VaroniaInput.Instance.Tracking.localPosition.x;
 
             }
             catch (Exception)

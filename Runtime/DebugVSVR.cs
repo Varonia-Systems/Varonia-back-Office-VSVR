@@ -33,7 +33,7 @@ public class DebugVSVR
     }
 
 
-
+    
 
     public static bool NeedStop, IsRunning;
 

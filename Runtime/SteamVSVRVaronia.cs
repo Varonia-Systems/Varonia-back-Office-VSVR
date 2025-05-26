@@ -10,7 +10,7 @@ using static DebugVSVR;
 
 public class SteamVSVRVaronia : MonoBehaviour
 {
-
+    //
 
     [BoxGroup("Infos")] public bool Left_Hand_Ready;
     [BoxGroup("Infos")] public bool Right_Hand_Ready;

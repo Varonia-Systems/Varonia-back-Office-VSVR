@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "com.varonia.vbobase": "1.0.0",
-    "com.valvesoftware.unity.openvr": "1.0.0",
     "com.dbrizov.naughtyattributes": "1.0.0"
   }
 }

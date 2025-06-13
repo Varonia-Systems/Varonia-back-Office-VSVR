@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 971286994752119547}
   - component: {fileID: 2960489303983071365}
   - component: {fileID: 3216698888675662920}
-  - component: {fileID: 4509802783791907399}
+  - component: {fileID: 224771426279600444}
   m_Layer: 0
   m_Name: '[VSVR]'
   m_TagString: Untagged
@@ -74,7 +74,7 @@ MonoBehaviour:
   maxLatency: 50
   orangeThreshold: 7
   redThreshold: 13
---- !u!114 &4509802783791907399
+--- !u!114 &224771426279600444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 971286994752119545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b70b11959bbfb9147ad4784ae44555ad, type: 3}
+  m_Script: {fileID: 11500000, guid: bd3c2018faa8dd04cae85df00c33e6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3360487903338831369

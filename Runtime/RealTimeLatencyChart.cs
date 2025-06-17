@@ -29,6 +29,7 @@ public class RealTimeLatencyChart : MonoBehaviour
         GameObject canvasGO = new GameObject("Canvas", typeof(Canvas));
         canvasGO.transform.SetParent(transform);
         Canvas canvas = canvasGO.GetComponent<Canvas>();
+        canvas.gameObject.AddComponent<HideCanvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvasGO.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         // canvasGO.AddComponent<GraphicRaycaster>();
@@ -38,7 +39,7 @@ public class RealTimeLatencyChart : MonoBehaviour
         panelGO.transform.SetParent(canvasGO.transform);
         graphPanel = panelGO.GetComponent<RectTransform>();
         graphPanel.sizeDelta = chartSize;
-        graphPanel.anchorMin = new Vector2(0f, 0f);   // ?? Aligné en bas à gauche
+        graphPanel.anchorMin = new Vector2(0f, 0f);   // ?? Alignï¿½ en bas ï¿½ gauche
         graphPanel.anchorMax = new Vector2(0f, 0f);
         graphPanel.pivot = new Vector2(0f, 0f);
         graphPanel.anchoredPosition = Vector2.zero;
@@ -68,7 +69,7 @@ public class RealTimeLatencyChart : MonoBehaviour
     }
 
     /// <summary>
-    /// Appelle cette méthode avec la latence que tu veux afficher (à chaque tick réseau par exemple)
+    /// Appelle cette mï¿½thode avec la latence que tu veux afficher (ï¿½ chaque tick rï¿½seau par exemple)
     /// </summary>
     public void AddLatencyValue(float latency)
     {
@@ -79,7 +80,7 @@ public class RealTimeLatencyChart : MonoBehaviour
         else
             height = Mathf.Clamp01(latency / maxLatency) * chartSize.y;
 
-        // Recycler la première barre
+        // Recycler la premiï¿½re barre
         RectTransform oldBar = bars[0];
         Image oldImage = barImages[0];
 
@@ -95,7 +96,7 @@ public class RealTimeLatencyChart : MonoBehaviour
         // Couleur dynamique
         oldImage.color = GetColorForLatency(latency);
 
-        // Position (aligné à gauche)
+        // Position (alignï¿½ ï¿½ gauche)
         for (int i = 0; i < bars.Count; i++)
         {
             bars[i].anchoredPosition = new Vector2(i * barWidth, 0);

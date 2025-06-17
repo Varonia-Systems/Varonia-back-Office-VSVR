@@ -28,3 +28,6 @@
 push.bat 
 Init.bat 
 init-unity-git.bat 
+push.meta 
+Init.meta
+*.pdb.meta
